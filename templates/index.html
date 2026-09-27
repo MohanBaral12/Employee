@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Management - Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <style>
+      body {
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+      .bg-animated {
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: -1;
+        background: linear-gradient(120deg, #a1c4fd, #c2e9fb, #fbc2eb, #fcb69f);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+      }
+      @keyframes gradientBG {
+        0% {background-position: 0% 50%;}
+        50% {background-position: 100% 50%;}
+        100% {background-position: 0% 50%;}
+      }
+      .fade-in {
+        animation: fadeIn 1.2s;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(30px);}
+        to { opacity: 1; transform: none;}
+      }
+      .welcome-section {
+        background: rgba(255,255,255,0.7);
+        border-radius: 18px;
+        box-shadow: 0 4px 24px rgba(31,38,135,0.18);
+        padding: 2.5rem 2rem 2rem 2rem;
+        margin-bottom: 2.5rem;
+      }
+      .hero-icon {
+        font-size: 4rem;
+        color: #0d6efd;
+        margin-bottom: 0.5rem;
+        filter: drop-shadow(0 2px 8px #0d6efd33);
+      }
+      .feature-card {
+        background: rgba(255,255,255,0.85);
+        border-radius: 14px;
+        box-shadow: 0 2px 12px rgba(31,38,135,0.10);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .feature-card:hover {
+        transform: translateY(-7px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(31,38,135,0.18);
+      }
+      .table thead th {
+        vertical-align: middle;
+      }
+      .add-btn {
+        float: right;
+      }
+      .search-bar {
+        max-width: 350px;
+        margin: 0 auto 1.5rem auto;
+      }
+      .footer {
+        margin-top: 40px;
+        color: #555;
+        font-size: 1rem;
+        text-align: center;
+        opacity: 0.85;
+      }
+    </style>
+</head>
+<body>
+  <div class="bg-animated"></div>
+  {% include 'navbar.html'%}
+
+<div class="container d-flex flex-column align-items-center justify-content-center mt-5 mb-5 fade-in">
+  <div class="col-md-10 welcome-section text-center mb-4">
+    <div class="hero-icon mb-2">
+      <i class="bi bi-people-fill"></i>
+    </div>
+    <h1 class="mb-3 fw-bold">Welcome to Employee Management System</h1>
+    <p class="lead mb-4">Easily manage your organization's employees. Add, view, update, and keep track of all employee records with a modern, user-friendly interface.</p>
+    <a href="/emp-add/" class="btn btn-success btn-lg add-btn mb-2 shadow">
+      <i class="bi bi-person-plus-fill"></i> Add New Employee
+    </a>
+  </div>
+
+  <!-- Move the List of Employees table here, right after welcome-section -->
+  <div class="col-md-11 p-4 mb-4" style="background: rgba(255,255,255,0.25); border-radius: 18px; box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);">
+    <h2 class="text-center my-3">List of Employees</h2>
+    <table class="table table-bordered table-hover table-striped text-center align-middle shadow rounded">
+      <thead class="table-primary">
+        <tr>
+          <th>#</th>
+          <th>Emp_Id</th>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Address</th>
+          <th>Department</th>
+          <th>Working</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% if emps %}
+          {% for e in emps %}
+          <tr>
+            <th>{{forloop.counter}}</th>
+            <th>{{e.emp_id}}</th>
+            <td>{{e.name}}</td>
+            <td>{{e.phone}}</td>
+            <td>{{e.address}}</td>
+            <td>{{e.department}}</td>
+            <td>
+              {% if e.working %}
+                <span class="badge bg-success">Yes</span>
+              {% else %}
+                <span class="badge bg-secondary">No</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" class="text-center text-muted">
+              No employees found. Click "Add New Employee" to get started.
+            </td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row w-100 mb-4">
+    <div class="col-md-4">
+      <div class="feature-card text-center h-100">
+        <i class="bi bi-person-plus display-5 text-primary"></i>
+        <h5 class="mt-2">Add Employees</h5>
+        <p class="mb-0">Quickly add new employees with all essential details in a single form.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card text-center h-100">
+        <i class="bi bi-list-check display-5 text-success"></i>
+        <h5 class="mt-2">View &amp; Search</h5>
+        <p class="mb-0">Browse the employee list and search by name, department, or status.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card text-center h-100">
+        <i class="bi bi-pencil-square display-5 text-warning"></i>
+        <h5 class="mt-2">Edit &amp; Update</h5>
+        <p class="mb-0">Easily update employee information or remove records as needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search bar (visual only, for future search feature) -->
+  <form class="search-bar mb-3">
+    <div class="input-group shadow-sm">
+      <input type="text" class="form-control" placeholder="Search employees..." aria-label="Search employees" disabled>
+      <button class="btn btn-outline-primary" type="button" disabled>
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+    <small class="text-muted">Search coming soon!</small>
+  </form>
+</div>
+
+<div class="footer">
+  <hr>
+  <div>
+    <span><i class="bi bi-info-circle"></i> Employee Management System &copy; {{ now|date:"Y" }} | Made with <span style="color:#e25555;">&#10084;</span> for your organization</span>
+  </div>
+</div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

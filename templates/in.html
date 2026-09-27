@@ -1,0 +1,19 @@
+<tbody class="table-group-divider">
+      {% for t in tudo %}
+        <tr>
+          <th>{{forloop.counter}}</th>
+          <th>{{t.title}}</th>
+          <td>{{t.description}}</td>
+          <td>{{t.date}}</td>
+          <td>{{t.last_update}}</td>
+          <td>
+            <a href="update-emp/{{e.id}}" class="btn btn-sm btn-primary me-1">
+              <i class="bi bi-pencil-square"></i> Edit
+            </a>
+            <a href="delete-emp/{{e.id}}" class="btn btn-sm btn-danger">
+              <i class="bi bi-trash"></i> Delete
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
